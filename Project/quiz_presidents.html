@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="CSS/main_styles.css">
+	<link rel="stylesheet" href="CSS/flowText.css">
+	<link rel="icon"
+		href="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png">
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+	<title>Quiz</title>
+	<style>
+		:root {
+			--bg-color: rgb(237, 235, 235);
+		}
+
+		html {
+			height: 100%;
+			width: 100%;
+		}
+
+		html::-webkit-scrollbar {
+			display: none;
+		}
+
+		body {
+			bottom: 0;
+			height: 100%;
+			padding: 0;
+			margin: 0;
+			background-color: gray;
+			background: linear-gradient(45deg, rgba(63, 49, 118, 0.6) 0%, rgba(159, 174, 233, 0.6) 50%, rgba(255, 103, 103, 0.6) 100%) no-repeat center center fixed;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+		}
+
+		.startNoticeDIV {
+			position: absolute;
+			display: flex;
+			flex-direction: column;
+			font-size: large;
+			text-align: center;
+			border-radius: 3rem;
+			left: 30%;
+			top: 30%;
+			width: 40vw;
+			height: 50vh;
+			background-color: rgba(255, 255, 255, 0.17);
+		}
+
+		.startNoticeDIV>p {
+			padding: 3vw;
+			font-family: 'Times New Roman', Times, serif;
+		}
+
+		.startNoticeDIV>p>span {
+			font-size: xx-large;
+			font-family: fantasy;
+		}
+
+		.agreeButton {
+			position: absolute;
+			left: 31%;
+			top: 80%;
+			background-color: rgba(255, 255, 255, 0.51);
+			border-radius: 2em;
+			border: none;
+			width: 15vw;
+			height: 5vh;
+			text-transform: uppercase;
+			font-weight: bold;
+			cursor: pointer;
+			transition: 0.2s;
+		}
+
+		.agreeButton:hover {
+			background-color: rgba(250, 250, 250, 0.419);
+		}
+
+		.main {
+			display: none;
+			position: relative;
+			margin-top: 3vh;
+			border-radius: 20px;
+			box-shadow: 7px 7px 7px rgb(23, 12, 73);
+			background-image: url("https://wallpapercave.com/wp/qhGPDUl.jpg");
+			background-size: 100%;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			width: 55vw;
+			height: 50vh;
+		}
+
+		.question-section {
+			margin: 2%;
+			width: 90%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+		}
+
+		.question {
+			display: flex;
+			color: rgb(0, 0, 0);
+			background-color: white;
+			text-align: center;
+			padding: 0.5em;
+			justify-content: center;
+			top: 10%;
+			width: 52.6vw;
+			height: auto;
+			position: absolute;
+			font-size: xx-large;
+			margin-top: 1vh;
+			-ms-user-select: none;
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			user-select: none;
+		}
+
+		.answers {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			margin-top: 30vh;
+			width: 100%;
+			height: 100%;
+		}
+
+		.answer-btn {
+			border-radius: 5rem;
+			background-color: #eee;
+			text-align: center;
+			align-items: center;
+			justify-content: center;
+			border: none;
+			color: #333;
+			cursor: pointer;
+			font-size: large;
+			font-weight: bold;
+			margin: 1%;
+			padding: 1%;
+			width: 11vw;
+			height: 8vh;
+			transition: 0.5s;
+		}
+
+		.answer-btn:hover {
+			background-color: rgba(255, 255, 255, 0.86);
+			color: rgb(23, 12, 73);
+			margin-bottom: 1vw;
+			box-shadow: 1px 1px 5px rgb(23, 12, 73);
+		}
+
+		.endQuizbtn {
+			margin-top: 3vw;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+		}
+
+		.hidden {
+			display: none;
+		}
+
+		#resultSec {
+			height: 100%;
+			width: 100%;
+		}
+
+		.result-message {
+			background-color: white;
+			position: absolute;
+			text-align: center;
+			justify-content: center;
+			padding: 0.5em;
+			width: 52.6vw;
+			height: auto;
+			font-size: 2rem;
+			top: 3vw;
+			left: 0;
+		}
+
+		.restart-btn,
+		.showAnswers-btn {
+			background-color: #333;
+			border: none;
+			border-radius: 10px;
+			color: #fff;
+			cursor: pointer;
+			font-size: large;
+			width: 15vw;
+			height: 10vh;
+			transition: 0.5s;
+		}
+
+		.restart-btn:hover,
+		.showAnswers-btn:hover {
+			background-color: #444;
+			border: solid 1px red;
+			background-color: rgb(23, 12, 73);
+			box-shadow: 1px 1px 15px gray;
+			width: 17vw;
+			height: 12vh;
+		}
+
+		.newCard {
+			-webkit-animation-duration: 0.5s;
+			animation-duration: 0.5s;
+			-webkit-animation-fill-mode: both;
+			animation-fill-mode: both;
+			-webkit-animation-name: fadeInRight;
+			animation-name: fadeInRight;
+		}
+
+		.dropBestScore,
+		.bestRecordP,
+		.dropBestScore {
+			transition: 0.5s;
+		}
+
+		.bestRecordDIV {
+			display: flex;
+			color: white;
+			text-align: center;
+			align-items: center;
+			justify-content: center;
+			font-size: x-large;
+			margin-right: 10vw;
+			margin-left: 15vw;
+			font-family: fantasy;
+		}
+
+		.myResultsDiv {
+			display: none;
+			position: relative;
+			background-color: rgba(255, 255, 255, 0.17);
+			margin-top: 3vh;
+			border-radius: 20px;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			border: none;
+			width: 55vw;
+			height: auto;
+		}
+
+		.quizAnswersList>li {
+			font-size: large;
+			padding: 1vw;
+			border-bottom: 1px ridge rgb(23, 12, 73);
+		}
+
+		.quizAnswersList>.lastLi {
+			border: none;
+		}
+
+
+		@media (max-width: 747px) {
+
+			p,
+			small,
+			i,
+			button,
+			.question,
+			.answer-btn,
+			.result-message,
+			.restart-btn,
+			.showAnswers-btn {
+				font-size: xx-small;
+			}
+
+			.noticeDiv>p>span {
+				font-size: xx-small;
+			}
+
+			.startNoticeDIV>p>span {
+				font-size: x-small;
+			}
+		}
+
+		@media (max-height: 570px) {
+
+			p,
+			small,
+			i,
+			button,
+			.question,
+			.answer-btn,
+			.result-message,
+			.restart-btn,
+			.showAnswers-btn {
+				font-size: xx-small;
+			}
+
+			.noticeDiv>p>span {
+				font-size: xx-small;
+			}
+
+			.startNoticeDIV>p>span {
+				font-size: x-small;
+			}
+		}
+
+		@-webkit-keyframes fadeInRight {
+			0% {
+				opacity: 0;
+				-webkit-transform: translateX(20vw);
+			}
+
+			100% {
+				opacity: 1;
+				-webkit-transform: translateX(0);
+			}
+		}
+
+		@keyframes fadeInRight {
+			0% {
+				opacity: 0;
+				transform: translateX(20vw);
+			}
+
+			100% {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="topbelt">
+		<div class="bestRecordDIV" id="bestRecordDIV">
+			<p class="bestRecordP" id="bestRecordP"></p>
+		</div>
+		<div id="time" class="time"></div>
+		<button type='button' class='quizbtn' id='listbtn' onclick="location.replace('index.php')">Presidents</button>
+	</div>
+	<div id="theme" class="pageTheme" style="background-color: rgb(216, 0, 0); color: white;">
+		<h1 class="themeText">US PRESIDENTS QUIZ</h1>
+	</div><br><br>
+	<div id="startNoticeDIV" class="startNoticeDIV">
+		<p class="startNotice" id="startNotice"><span>Welcome!</span><br><br><br>This is a small quiz about US
+			presidents, which contains only 20 interesting questions. Are you ready to check your knowledge?<br><br>
+			<small>P.S: if you'll open previous page or update this page, your current progress will be
+				<i>lost</i>.</small>
+		</p>
+		<button id="agreeButton" class="agreeButton">Start</button>
+	</div>
+	<div class="main" id="main">
+		<div class="question-section" id="question-section">
+			<h2 class="question" id="question"></h2>
+			<div class="answers" id="answersBtn">
+				<button class="answer-btn" id="answer-btn">Answer 1</button>
+				<button class="answer-btn" id="answer-btn">Answer 2</button>
+				<button class="answer-btn" id="answer-btn">Answer 3</button>
+				<button class="answer-btn" id="answer-btn">Answer 4</button>
+			</div>
+		</div>
+		<div class="result-section hidden" id="resultSec">
+			<h2 class="result-message" id="resultMsg"></h2>
+			<div class="endQuizbtn" id="endQuizbtn">
+				<button class="restart-btn" id="restartBtn">Restart Quiz</button>
+				<button class="showAnswers-btn" id="showAnswersBtn" onclick="showAnswers()">Show my answers</button>
+			</div>
+		</div>
+	</div>
+	<div class="myResultsDiv" id="myResultsDiv">
+		<ul class="quizAnswersList" id="quizAnswersList" style="list-style-type: none;">
+
+		</ul>
+	</div><br><br>
+	<a href="#top">
+		<button class="btnToTop" id="btnToTop">
+			<span class="material-symbols-outlined">
+				arrow_upward
+			</span>
+		</button>
+	</a>
+	<div class="footer">
+		<p id="date"></p>
+	</div>
+	<script src="JS/getTime.js"></script>
+	<script src="JS/goTop.js"></script>
+	<script>
+		const questions = [
+			{
+				num: "1",
+				question: "1. Who was the first US president?",
+				answers: ["George Washington", "Thomas Jefferson", "John Adams", "James Madison"],
+				correctAnswer: "George Washington"
+			},
+			{
+				num: "2",
+				question: "2. Which US president is known as the 'Great Emancipator'?",
+				answers: ["Andrew Jackson", "Abraham Lincoln", "James K. Polk", "Zachary Taylor"],
+				correctAnswer: "Abraham Lincoln"
+			},
+			{
+				num: "3",
+				question: "3. Who was the only US president to serve more than two terms?",
+				answers: ["George H.W. Bush", "Ronald Reagan", "Franklin D. Roosevelt", "Richard Nixon"],
+				correctAnswer: "Franklin D. Roosevelt"
+			},
+			{
+				num: "4",
+				question: "4. Which president survived an assassination attempt 69 days into his term?",
+				answers: ["Herbert Hoover", "Chester A. Arthur", "Theodore Roosevelt", "Ronald Reagan"],
+				correctAnswer: "Ronald Reagan"
+			},
+			{
+				num: "5",
+				question: "5. What president lived the longest?",
+				answers: ["Lyndon B. Johnson", "Ronald Reagan", "Jimmy Carter", "Franklin Pierce"],
+				correctAnswer: "Jimmy Carter"
+			},
+			{
+				num: "6",
+				question: "6. Who was the first Roman Catholic president?",
+				answers: ["George H.W. Bush", "John F. Kennedy", "William Howard Taft", "James Madison"],
+				correctAnswer: "John F. Kennedy"
+			},
+			{
+				num: "7",
+				question: '7. Which president was described as so honest that if you turned his soul inside out there would not be a spot on it?"',
+				answers: ["James Monroe", "Ronald Reagan", "Franklin D. Roosevelt", "Rutherford B. Hayes"],
+				correctAnswer: "James Monroe"
+			},
+			{
+				num: "8",
+				question: "8. Which president is the first to have a rescue dog while in office? ",
+				answers: ["Joe Biden", "James Garfield", "Barack Obama", "John F. Kennedy"],
+				correctAnswer: "Joe Biden"
+			},
+			{
+				num: "9",
+				question: "9. Which president warned against political parties, long-term foreign alliances and strict geographical divides in his farewell address?",
+				answers: ["Grover Cleveland", "William H. Taft", "George Washington", "John Quincy Adams"],
+				correctAnswer: "George Washington"
+			},
+			{
+				num: "10",
+				question: "10. Who was the first president to live in the White House?",
+				answers: ["William McKinley", "John Tyler", "Bill Clinton", "John Adams"],
+				correctAnswer: "John Adams"
+			},
+			{
+				num: "11",
+				question: "11. According to his wishes, this president was buried wrapped in the American flag and his head rested on a copy of the U.S. Constitution?",
+				answers: ["William Henry Harrison", "Andrew Johnson", "Benjamin Harrison", "Calvin Coolidge"],
+				correctAnswer: "Andrew Johnson"
+			},
+			{
+				num: "12",
+				question: "12. In 1934, the image of this president was printed on the $100,000 bill, the highest denomination ever issued by the U.S. federal government?",
+				answers: ["George Washington", "Abraham Lincoln", "James Monroe", "Woodrow Wilson"],
+				correctAnswer: "Woodrow Wilson"
+			},
+			{
+				num: "13",
+				question: "13. Which president was the last to own slaves? ",
+				answers: ["Ulysses S. Grant", "Warren G. Harding", "James A. Garfield", "Franklin Pierce"],
+				correctAnswer: "Ulysses S. Grant"
+			},
+			{
+				num: "14",
+				question: "14. Which president succeeded the first president to ever resign from office?",
+				answers: ["John F. Kennedy", "Harry S. Truman", "Gerald R. Ford", "George H. W. Bush"],
+				correctAnswer: "Gerald R. Ford"
+			},
+			{
+				num: "15",
+				question: '15. Which president was known as a "little magician?"',
+				answers: ["Barack Obama", "Martin Van Buren", "William Henry Harrison", "James Madison"],
+				correctAnswer: "Martin Van Buren"
+			},
+			{
+				num: "16",
+				question: "16. Which president introduced the Social Security program?",
+				answers: ["Franklin D. Roosevelt", "Calvin Coolidge", "Harry S. Truman", "Lyndon B. Johnson"],
+				correctAnswer: "Franklin D. Roosevelt"
+			},
+			{
+				num: "17",
+				question: "17. Which president was the fourth to win the Nobel Peace Prize?",
+				answers: ["William J.(Bill) Clinton", "John F. Kennedy", "Jimmy Carter", "Barack Obama"],
+				correctAnswer: "Barack Obama"
+			},
+			{
+				num: "18",
+				question: "18. Which president got stuck in a bathtub?",
+				answers: ["Herbert Hoover", "Joe R. Biden", "William Howard Taft", "Theodore Roosevelt"],
+				correctAnswer: "William Howard Taft"
+			},
+			{
+				num: "19",
+				question: "19. Who was the first president to be born in the United States?",
+				answers: ["Martin Van Buren", "James Madison", "George Washington", "Thomas Jefferson"],
+				correctAnswer: "Martin Van Buren"
+			},
+			{
+				num: "20",
+				question: "20. Who was the first ever President to visit all 50 states?",
+				answers: ["John F. Kennedy", "Benjamin Harrison", "Woodrow Wilson", "Richard Nixon"],
+				correctAnswer: "Richard Nixon"
+			}
+		];
+
+		let currentQuestion = 0;
+		let score = 0;
+		let bestScore = 0;
+		let userAnswers = [];
+
+		const answerBtns = document.querySelectorAll(".answer-btn");
+		const resultEl = document.getElementById("resultMsg");
+		const restartBtn = document.getElementById("restartBtn");
+		const showAnswersBtn = document.getElementById("showAnswersBtn");
+		const resultSection = document.getElementById("resultSec");
+		const answersBtn = document.getElementById("answersBtn");
+		const question = document.getElementById("question");
+		const myResultsDiv = document.getElementById("myResultsDiv");
+		const questionCard = document.getElementById("main");
+		const answerBtn = document.getElementById("answer-btn");
+		const bestRecord = document.getElementById("bestRecordP");
+		const startNoticeDiv = document.getElementById("startNoticeDIV");
+		const agreeBtn = document.getElementById("agreeButton");
+		const quiz = document.getElementById("main");
+
+		function showNotice() {
+			agreeBtn.addEventListener("click", showQuestion);
+		}
+
+		function showQuestion() {
+			startNoticeDiv.style.display = "none";
+			quiz.style.display = "flex";
+			const questionEl = document.getElementById("question");
+			questionEl.innerHTML = questions[currentQuestion].question;
+			for (let i = 0; i < answerBtns.length; i++) {
+				answerBtns[i].innerHTML = questions[currentQuestion].answers[i];
+				answerBtns[i].addEventListener("click", checkAnswer);
+			}
+		}
+
+		function checkAnswer(event) {
+			if (event.target.innerHTML === questions[currentQuestion].correctAnswer) {
+				score++;
+				console.log(score);
+			}
+			currentQuestion++;
+
+			userAnswers.push(event.target.innerHTML);
+			console.log(userAnswers);
+			questionCard.classList.add(`newCard`);
+			let listener = questionCard.addEventListener('animationend', function () {
+				questionCard.classList.remove("newCard");
+				questionCard.removeEventListener('animationend', listener);
+			});
+			if (currentQuestion < questions.length) {
+				showQuestion();
+			} else {
+				showResult();
+				setBestScore();
+				showBestScore();
+			}
+		}
+
+		function restartQuiz() {
+			location.reload();
+		}
+
+		function backToList() {
+			location.replace("index.php");
+		}
+
+		function showResult() {
+			bestRecord.addEventListener("dblclick", deleteBestScore);
+			resultSection.style.display = "flex";
+			if (score === questions.length) {
+				resultEl.innerHTML = `Congratulations! You got a perfect score of ${score}/${questions.length}!`;
+			} else {
+				resultEl.innerHTML = `You scored ${score}/${questions.length}. Keep studying to improve your score!`;
+			}
+			answersBtn.style.display = "none";
+			question.style.display = "none";
+			const list = document.getElementById("quizAnswersList");
+			for (let i = 0; i < questions.length; i++) {
+				const listItem = document.createElement("li");
+				if (userAnswers[i] === questions[i].correctAnswer) {
+					listItem.innerHTML = `<strong>${questions[i].question}</strong> <br> Your answer: <span style = "color: darkgreen">${userAnswers[i]}</span>`;
+				} else {
+					listItem.innerHTML = `<strong>${questions[i].question}</strong> <br> Your answer: <span style = "color: rgb(193, 21, 21)">${userAnswers[i]}</span> <br> Correct answer: <strong>${questions[i].correctAnswer}</strong>`;
+				}
+				list.appendChild(listItem);
+				if (i === questions.length - 1) {
+					listItem.className = "lastLi";
+				}
+			}
+			restartBtn.addEventListener("click", restartQuiz);
+		}
+
+		let isClicked = true;
+		function showAnswers() {
+			if (isClicked) {
+				showAnswersBtn.innerHTML = "Hide my answers";
+				myResultsDiv.style.display = "block";
+				isClicked = false;
+			} else {
+				showAnswersBtn.innerHTML = "Show my answers";
+				myResultsDiv.style.display = "none";
+				isClicked = true;
+			}
+		}
+
+		function showBestScore() {
+			bestScore = localStorage.getItem("best_score");
+			if (bestScore === null) {
+				bestScore = 0;
+				bestRecord.innerHTML = `Best Score:<br> ${bestScore}/${questions.length}`;
+			} else {
+				bestRecord.innerHTML = `Best Score:<br> ${bestScore}/${questions.length}`;
+			}
+		}
+
+		function setBestScore() {
+			if (localStorage.getItem("best_score") < score) {
+				localStorage.setItem("best_score", score);
+			}
+		}
+
+		function deleteBestScore() {
+			localStorage.clear();
+			showBestScore();
+		}
+
+		showNotice();
+		showBestScore();
+
+	</script>
+</body>
+
+</html>
